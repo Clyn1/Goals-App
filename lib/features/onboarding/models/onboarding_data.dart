@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class OnboardingData {
   final String title;
@@ -25,23 +26,23 @@ final Color creamColor = const Color(0xFFF5E6CA);    // Warm cream
 
 final List<OnboardingData> onboardingScreens = [
   OnboardingData(
-    title: 'Set Smart Goals',
-    description: 'Create specific, measurable goals with deadlines and track your daily progress toward achieving them.',
-    icon: Icons.track_changes_rounded,
+    title: 'Meet Your Pet Companion',
+    description: 'Choose from adorable pets that grow and evolve as you achieve your goals. Your companion will encourage and celebrate with you every step of the way!',
+    icon: Symbols.pets_rounded,
     backgroundColor: sunsetOrange,
     buttonText: 'Next',
   ),
   OnboardingData(
-    title: 'Build Better Habits',
-    description: 'Turn your aspirations into daily habits with reminders, streaks, and visual progress tracking.',
-    icon: Iconsax.calendar_tick,
+    title: 'Create Meaningful Goals',
+    description: 'Set daily, weekly or long-term goals with customizable categories, reminders, and milestones. Break larger goals into manageable sub-tasks.',
+    icon: Iconsax.task_square,
     backgroundColor: coralRed,
     buttonText: 'Next',
   ),
   OnboardingData(
-    title: 'Stay Motivated',
-    description: 'Celebrate milestones, earn achievements, and stay accountable with friends to reach your potential.',
-    icon: Icons.emoji_events_rounded,
+    title: 'Grow Together',
+    description: 'Watch your pet evolve through five stages as you complete goals. Unlock new abilities, customize your pet, and create a beautiful habitat for your companion.',
+    icon: FontAwesomeIcons.seedling,
     backgroundColor: creamColor,
     buttonText: 'Get Started',
   ),

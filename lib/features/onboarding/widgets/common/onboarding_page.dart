@@ -155,11 +155,18 @@ class OnboardingPage extends StatelessWidget {
               // Progress indicator
               if (totalPages > 1)
                 Center(
-                  child: OnboardingProgress(
-                    currentStep: currentIndex + 1,
-                    totalSteps: totalPages,
-                    activeColor: const Color(0xFFFFC107), // Gold/Amber dots
-                    inactiveColor: Colors.white,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: OnboardingProgress(
+                      currentStep: currentIndex + 1,
+                      totalSteps: totalPages,
+                      activeColor: const Color(0xFFFFC107), // Gold/Amber dots
+                      inactiveColor: Colors.white,
+                    ),
                   ),
                 ),
               

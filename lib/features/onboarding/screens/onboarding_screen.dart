@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/onboarding_data.dart';
 import '../widgets/common/onboarding_page.dart';
+import '../widgets/common/page_transition.dart';
+import '../../auth/screens/auth_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -9,9 +11,14 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerProviderStateMixin {
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
+  
+  // Variables for tracking swipe gestures
+  double _dragStartX = 0.0;
+  double _dragUpdateX = 0.0;
+  static const double _swipeThreshold = 100.0;
 
   @override
   void dispose() {
@@ -29,8 +36,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_currentPageIndex < onboardingScreens.length - 1) {
       _pageController.animateToPage(
         _currentPageIndex + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.ease,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
       );
     } else {
       _completeOnboarding();
@@ -41,39 +48,67 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_currentPageIndex > 0) {
       _pageController.animateToPage(
         _currentPageIndex - 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.ease,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
       );
     }
   }
 
   void _completeOnboarding() {
-    // Simple completion - staying on the last page
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Onboarding completed! 🎉'),
-        duration: Duration(seconds: 2),
-      ),
+    // Navigate to auth screen
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const AuthScreen()),
     );
+  }
+  
+  // Handle swipe gestures
+  void _onDragStart(DragStartDetails details) {
+    _dragStartX = details.globalPosition.dx;
+  }
+  
+  void _onDragUpdate(DragUpdateDetails details) {
+    _dragUpdateX = details.globalPosition.dx;
+  }
+  
+  void _onDragEnd(DragEndDetails details) {
+    final double dragDistance = _dragUpdateX - _dragStartX;
+    
+    // Detect swipe direction and navigate accordingly if it exceeds threshold
+    if (dragDistance.abs() >= _swipeThreshold) {
+      if (dragDistance > 0) {
+        // Swiped right - go back
+        _navigateBack();
+      } else {
+        // Swiped left - go forward
+        _navigateToNextPage();
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: GestureDetector(
+        onHorizontalDragStart: _onDragStart,
+        onHorizontalDragUpdate: _onDragUpdate,
+        onHorizontalDragEnd: _onDragEnd,
+        child: Container(
         decoration: const BoxDecoration(
           color: Color(0xFF2D3142),
         ),
         child: PageView.builder(
           controller: _pageController,
           onPageChanged: _onPageChanged,
-          physics: const ClampingScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
           itemCount: onboardingScreens.length,
           pageSnapping: true,
           itemBuilder: (context, index) {
             final screen = onboardingScreens[index];
             final isLastPage = index == onboardingScreens.length - 1;
             
+              // No fancy transitions, just show the page directly
             return OnboardingPage(
               currentIndex: _currentPageIndex,
               totalPages: onboardingScreens.length,
@@ -88,6 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onBackPressed: _navigateBack,
             );
           },
+          ),
         ),
       ),
     );
