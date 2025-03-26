@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "apps.goals.goalsapp"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = "28.0.13004108"
 
     compileOptions {
