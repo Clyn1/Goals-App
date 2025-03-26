@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import '../models/onboarding_data.dart';
 import '../widgets/common/onboarding_page.dart';
 
@@ -10,14 +9,9 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerProviderStateMixin {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -35,8 +29,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     if (_currentPageIndex < onboardingScreens.length - 1) {
       _pageController.animateToPage(
         _currentPageIndex + 1,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
       );
     } else {
       _completeOnboarding();
@@ -47,8 +41,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     if (_currentPageIndex > 0) {
       _pageController.animateToPage(
         _currentPageIndex - 1,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
       );
     }
   }
@@ -65,18 +59,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    // Use ClampingScrollPhysics to prevent overscroll bounce but allow swiping
-    const ScrollPhysics scrollPhysics = ClampingScrollPhysics();
-    
     return Scaffold(
       body: Container(
-        // This container will fill any gaps with a dark color
-        color: const Color(0xFF2D3142), // Dark background color
+        decoration: const BoxDecoration(
+          color: Color(0xFF2D3142),
+        ),
         child: PageView.builder(
           controller: _pageController,
           onPageChanged: _onPageChanged,
-          physics: scrollPhysics,
+          physics: const ClampingScrollPhysics(),
           itemCount: onboardingScreens.length,
+          pageSnapping: true,
           itemBuilder: (context, index) {
             final screen = onboardingScreens[index];
             final isLastPage = index == onboardingScreens.length - 1;

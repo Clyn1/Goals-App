@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chiclet/chiclet.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:goalsapp/features/onboarding/widgets/common/onboarding_progress.dart';
-import 'package:goalsapp/features/onboarding/widgets/common/fade_transition_content.dart';
+import 'package:goalsapp/features/onboarding/widgets/common/bounce_button.dart';
 
 class OnboardingPage extends StatelessWidget {
   final String title;
@@ -102,72 +101,52 @@ class OnboardingPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Icon with animation
-                          FadeTransitionContent(
-                            pageIndex: currentIndex,
-                            currentPageIndex: currentIndex,
-                            delay: const Duration(milliseconds: 100),
-                            slideOffset: const Offset(0, 30),
-                            child: Container(
-                              height: 160,
-                              width: 160,
-                              decoration: BoxDecoration(
-                                color: backgroundColor.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                icon,
-                                size: 80,
-                                color: backgroundColor == const Color(0xFFF5E6CA) 
-                                    ? const Color(0xFF5B4B8A) // Dark purple for cream background
-                                    : backgroundColor,
-                              ),
+                          // Icon
+                          Container(
+                            height: 160,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: backgroundColor.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              icon,
+                              size: 80,
+                              color: backgroundColor == const Color(0xFFF5E6CA) 
+                                  ? const Color(0xFF5B4B8A) // Dark purple for cream background
+                                  : backgroundColor,
                             ),
                           ),
                           
                           const SizedBox(height: 30),
                           
-                          // Title with animation
-                          FadeTransitionContent(
-                            pageIndex: currentIndex,
-                            currentPageIndex: currentIndex,
-                            delay: const Duration(milliseconds: 200),
-                            slideOffset: const Offset(0, 30),
-                            child: Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF2D3142),
-                              ),
-                              textAlign: TextAlign.center,
+                          // Title
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2D3142),
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           
                           const SizedBox(height: 16),
                           
-                          // Description with animation
-                          FadeTransitionContent(
-                            pageIndex: currentIndex,
-                            currentPageIndex: currentIndex,
-                            delay: const Duration(milliseconds: 300),
-                            slideOffset: const Offset(0, 30),
-                            child: Text(
-                              description,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Color(0xFF9C9EB9),
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.center,
+                          // Description
+                          Text(
+                            description,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFF9C9EB9),
+                              height: 1.5,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
                     ),
-                  ).animate()
-                    .fadeIn(duration: 800.ms)
-                    .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.0, 1.0), curve: Curves.easeOutQuint),
+                  ),
                 ),
               ),
               
@@ -187,56 +166,50 @@ class OnboardingPage extends StatelessWidget {
               const SizedBox(height: 24),
               
               // Button at the bottom
-              FadeTransitionContent(
-                pageIndex: currentIndex,
-                currentPageIndex: currentIndex,
-                delay: const Duration(milliseconds: 400),
-                slideOffset: const Offset(0, 30),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // Main continue/get started button (always centered)
-                    Center(
-                      child: ChicletAnimatedButton(
-                        onPressed: onButtonPressed,
-                        backgroundColor: Colors.white,
-                        buttonColor: Colors.grey.shade300,
-                        foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
-                            ? const Color(0xFF5B4B8A) // Dark purple for cream background
-                            : backgroundColor,
-                        height: 56,
-                        width: 200,
-                        child: Text(
-                          buttonText,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Main continue/get started button (always centered)
+                  Center(
+                    child: BounceButton(
+                      onPressed: onButtonPressed,
+                      backgroundColor: Colors.white,
+                      buttonColor: Colors.grey.shade300,
+                      foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
+                          ? const Color(0xFF5B4B8A) // Dark purple for cream background
+                          : backgroundColor,
+                      height: 56,
+                      width: 200,
+                      child: Text(
+                        buttonText,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    
-                    // Back button - only show if not on first page and onBackPressed is provided
-                    if (currentIndex > 0 && onBackPressed != null)
-                      Positioned(
-                        left: 0,
-                        child: ChicletAnimatedButton(
-                          onPressed: onBackPressed,
-                          backgroundColor: Colors.white,
-                          buttonColor: Colors.grey.shade300,
-                          foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
-                              ? const Color(0xFF5B4B8A) 
-                              : backgroundColor,
-                          height: 56,
-                          width: 56,
-                          child: const Icon(
-                            Icons.arrow_back_rounded,
-                            size: 24,
-                          ),
+                  ),
+                  
+                  // Back button - only show if not on first page and onBackPressed is provided
+                  if (currentIndex > 0 && onBackPressed != null)
+                    Positioned(
+                      left: 0,
+                      child: BounceButton(
+                        onPressed: () => onBackPressed!(),
+                        backgroundColor: Colors.white,
+                        buttonColor: Colors.grey.shade300,
+                        foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
+                            ? const Color(0xFF5B4B8A) 
+                            : backgroundColor,
+                        height: 56,
+                        width: 56,
+                        child: const Icon(
+                          Icons.arrow_back_rounded,
+                          size: 24,
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ],
           ),
