@@ -70,6 +70,45 @@
 - Finch-Style Mood Tracking: Optional user mood logging affects pet mood
 - Finch-Style Conversation: Simple chat-like interaction with pet
 
+## 1.2.1 Pet Animation System (Finch-Style)
+- Image-based animation system using sprite sheets and individual PNGs
+- Organized asset structure:
+  ```
+  assets/
+  └── pets/
+      ├── idle/
+      │   ├── idle_1.png
+      │   ├── idle_2.png
+      │   └── ...
+      ├── walking/
+      │   ├── walk_1.png
+      │   ├── walk_2.png
+      │   └── ...
+      ├── sleeping/
+      │   ├── sleep_1.png
+      │   └── ...
+      └── celebrations/
+          ├── dance_1.png
+          └── ...
+  ```
+- Layered animation system:
+  - Separate images for body parts (body, wings, eyes, etc.)
+  - Independent animation of each part
+  - Combined layers create complete pet movement
+- Animation states:
+  - Idle animations (breathing, small movements)
+  - Walking animations (left/right)
+  - Jumping animations
+  - Sleeping animations
+  - Eating animations
+  - Celebration animations (dancing, etc.)
+- Technical implementation:
+  - Sprite sheets for continuous movements
+  - Individual PNGs for specific poses
+  - Vector images (SVG) for scalable parts
+  - Lottie animations for complex movements
+  - Physics-based animations for natural movement
+
 ## 1.3 Growth & Evolution System
 - Five evolution stages (Newborn, Juvenile, Adolescent, Adult, Legendary)
 - Visual transformation with each evolution stage
