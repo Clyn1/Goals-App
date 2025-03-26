@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Rules for User-Centric Development 🎯
+
+1. User Voice is King 👑
+- Listen carefully to user feedback and feature requests
+- Prioritize changes that directly benefit users
+- Don't assume what users want - ask and validate
+- Take user complaints seriously and address them promptly
+
+2. Keep It Simple & Delightful 🌟
+- Focus on intuitive, easy-to-understand features
+- Avoid unnecessary complexity
+- Add small moments of delight (animations, encouraging messages)
+- Make common tasks effortless
+
+3. Respect User Time & Effort ⏰
+- Minimize required clicks/taps
+- Provide quick shortcuts for power users
+- Remember user preferences
+- Make data entry as painless as possible
+
+4. Think Like a User 🤔
+- Test features from user perspective
+- Consider different user skill levels
+- Account for various use cases
+- Think about edge cases that might frustrate users
+
+5. Continuous Improvement 📈
+- Gather usage metrics thoughtfully
+- Analyze user patterns
+- Make data-driven decisions
+- Iterate based on real feedback
+
+6. Accessibility First 🌈
+- Design for users of all abilities
+- Support screen readers
+- Consider color blindness
+- Make text readable and scalable
+
+7. Privacy & Trust 🔒
+- Be transparent about data usage
+- Only collect necessary information
+- Give users control over their data
+- Protect user information diligently
+
+8. Performance Matters 🚀
+- Keep load times snappy
+- Optimize resource usage
+- Test on lower-end devices
+- Consider offline capabilities
+
+9. Error Prevention > Error Handling 🛡️
+- Guide users to success
+- Provide clear instructions
+- Add helpful tooltips
+- Use smart defaults
+
+10. Communication is Key 💬
+- Write clear, friendly error messages
+- Explain complex features simply
+- Keep users informed of changes
+- Provide helpful documentation
+
+Remember: Happy Users = Successful App! 😊

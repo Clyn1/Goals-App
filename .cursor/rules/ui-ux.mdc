@@ -1,0 +1,96 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Mobile UI/UX Design Guidelines for Flutter Development
+
+Layout & Structure
+- Use safe area insets to avoid notches and system UI
+- Implement bottom navigation for primary sections (max 4-5 items)
+- Keep content within thumb-reachable zones (bottom 2/3 of screen)
+- Use consistent spacing scale: 4dp, 8dp, 16dp, 24dp, 32dp
+- Design for portrait mode first, landscape as optional
+- Implement proper keyboard handling with scrolling views
+- Use sliver lists/grids for smooth scrolling experiences
+- Implement responsive layouts with LayoutBuilder
+- Use proper constraints for flexible UI components
+- Consider split-screen and foldable device support
+
+Touch Interactions
+- Make touch targets minimum 48x48dp for reliable tapping
+- Add visual feedback for all interactive elements
+- Implement gesture-based navigation (swipe back, etc.)
+- Use bottom sheets for contextual actions
+- Add pull-to-refresh for content updates
+- Include haptic feedback for important actions
+- Support common mobile gestures (pinch zoom, double tap)
+- Add long-press actions for additional options
+- Implement swipe-to-dismiss functionality
+- Support multi-touch gestures where appropriate
+
+Visual Design
+- Follow platform-specific design patterns (Material/Cupertino)
+- Use system fonts for optimal rendering
+- Implement proper dark mode with automatic switching
+- Keep contrast ratios high for outdoor visibility
+- Use loading skeletons for content placeholders
+- Add subtle animations for state changes
+- Design empty states for all list/grid views
+- Implement consistent color theming system
+- Use proper typography hierarchy
+- Add visual hierarchy through elevation and shadows
+- Include meaningful icons and illustrations
+- Support dynamic text sizing
+- Implement proper image aspect ratios
+- Use proper spacing between UI elements
+
+Mobile-First Features
+- Add proper loading states for network operations
+- Use infinite scrolling for long lists
+- Cache images and data appropriately
+- Support deep linking for notifications
+- Handle screen rotation gracefully
+- Implement proper form input with mobile keyboards
+- Add offline support capabilities
+- Implement proper file handling
+- Support sharing functionality
+- Add biometric authentication options
+
+Error & State Management
+- Show network error states with retry options
+- Use toast/snackbar messages for feedback
+- Handle device permission states properly
+- Implement proper form validation
+- Show loading indicators for async operations
+- Cache last known good state
+- Handle app lifecycle states properly
+- Implement proper error boundaries
+- Add crash reporting and analytics
+- Handle edge cases gracefully
+
+Performance Optimization
+- Lazy load images and heavy content
+- Implement pagination for large datasets
+- Optimize animations for 60fps
+- Minimize main thread blocking
+- Use proper state management solutions
+- Implement efficient list rendering
+- Optimize app size and startup time
+- Use proper image caching
+- Implement memory management
+- Optimize network requests
+
+Mobile Testing
+- Test on various screen sizes and densities
+- Verify behavior with slow networks
+- Check memory usage and leaks
+- Test with different OS versions
+- Verify proper permission flows
+- Test background/foreground transitions
+- Ensure smooth scrolling performance
+- Test with different input methods
+- Verify accessibility features
+- Test offline functionality
+- Check battery consumption
+- Verify proper cleanup on app exit
