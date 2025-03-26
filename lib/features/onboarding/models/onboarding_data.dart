@@ -18,31 +18,31 @@ class OnboardingData {
   });
 }
 
-// Colors inspired by the travel app UI design in 4183095.jpg
-final Color salmonRed = const Color(0xFFFF7366);
-final Color deepBlue = const Color(0xFF2C3E50);
-final Color skyBlue = const Color(0xFF3498DB);
+// Warm color scheme
+final Color sunsetOrange = const Color(0xFFFF7E5F);  // Warm orange
+final Color coralRed = const Color(0xFFE95F5C);      // Coral red
+final Color creamColor = const Color(0xFFF5E6CA);    // Warm cream
 
 final List<OnboardingData> onboardingScreens = [
   OnboardingData(
     title: 'Set Smart Goals',
     description: 'Create specific, measurable goals with deadlines and track your daily progress toward achieving them.',
     icon: Icons.track_changes_rounded,
-    backgroundColor: salmonRed,
+    backgroundColor: sunsetOrange,
     buttonText: 'Next',
   ),
   OnboardingData(
     title: 'Build Better Habits',
     description: 'Turn your aspirations into daily habits with reminders, streaks, and visual progress tracking.',
     icon: Iconsax.calendar_tick,
-    backgroundColor: deepBlue,
+    backgroundColor: coralRed,
     buttonText: 'Next',
   ),
   OnboardingData(
     title: 'Stay Motivated',
     description: 'Celebrate milestones, earn achievements, and stay accountable with friends to reach your potential.',
     icon: Icons.emoji_events_rounded,
-    backgroundColor: skyBlue,
+    backgroundColor: creamColor,
     buttonText: 'Get Started',
   ),
 ]; 

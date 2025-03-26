@@ -1,53 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:goalsapp/features/onboarding/controllers/onboarding_controller.dart';
-import 'package:goalsapp/features/onboarding/models/onboarding_data.dart';
-import 'package:goalsapp/features/onboarding/widgets/common/onboarding_page.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:goalsapp/features/onboarding/widgets/theme/app_theme.dart';
+import '../models/onboarding_data.dart';
+import '../widgets/common/onboarding_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerProviderStateMixin {
-  final OnboardingController _controller = OnboardingController();
-  int _currentPage = 0;
-  late AnimationController _animationController;
+  final PageController _pageController = PageController();
+  int _currentPageIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    // Slight delay to improve visual experience
-    Future.delayed(const Duration(milliseconds: 200), () {
-      _animationController.forward();
-    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _animationController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
-  void _onPageChanged(int page) {
+  void _onPageChanged(int index) {
     setState(() {
-      _currentPage = page;
+      _currentPageIndex = index;
     });
   }
 
+  void _navigateToNextPage() {
+    if (_currentPageIndex < onboardingScreens.length - 1) {
+      _pageController.animateToPage(
+        _currentPageIndex + 1,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _completeOnboarding();
+    }
+  }
+
+  void _navigateBack() {
+    if (_currentPageIndex > 0) {
+      _pageController.animateToPage(
+        _currentPageIndex - 1,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   void _completeOnboarding() {
-    // Save onboarding completion status
-    _controller.setOnboardingComplete();
-    
-    // Show a simple completion message
+    // Simple completion - staying on the last page
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Onboarding completed! 🎉'),
@@ -58,41 +65,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    // Following best practice: immersive experience with animations
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Scaffold(
-          body: Opacity(
-            opacity: _animationController.value,
-            child: PageView.builder(
-              controller: _controller.pageController,
-              itemCount: onboardingScreens.length,
-              onPageChanged: _onPageChanged,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final screen = onboardingScreens[index];
-                final isLastPage = index == onboardingScreens.length - 1;
-                
-                return OnboardingPage(
-                  title: screen.title,
-                  description: screen.description,
-                  icon: screen.icon,
-                  backgroundColor: screen.backgroundColor,
-                  buttonText: screen.buttonText,
-                  showSkipButton: !isLastPage,
-                  onSkip: () => _controller.skipToEnd(onboardingScreens.length - 1),
-                  onButtonPressed: isLastPage 
-                    ? _completeOnboarding 
-                    : _controller.nextPage,
-                  currentIndex: index,
-                  totalPages: onboardingScreens.length,
-                );
-              },
-            ).animate().fadeIn(duration: 300.ms),
-          ),
-        );
-      },
+    // Use ClampingScrollPhysics to prevent overscroll bounce but allow swiping
+    const ScrollPhysics scrollPhysics = ClampingScrollPhysics();
+    
+    return Scaffold(
+      body: Container(
+        // This container will fill any gaps with a dark color
+        color: const Color(0xFF2D3142), // Dark background color
+        child: PageView.builder(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          physics: scrollPhysics,
+          itemCount: onboardingScreens.length,
+          itemBuilder: (context, index) {
+            final screen = onboardingScreens[index];
+            final isLastPage = index == onboardingScreens.length - 1;
+            
+            return OnboardingPage(
+              currentIndex: _currentPageIndex,
+              totalPages: onboardingScreens.length,
+              backgroundColor: screen.backgroundColor,
+              icon: screen.icon,
+              title: screen.title,
+              description: screen.description,
+              buttonText: isLastPage ? 'Get Started' : 'Continue',
+              showSkipButton: !isLastPage,
+              onButtonPressed: _navigateToNextPage,
+              onSkip: _completeOnboarding,
+              onBackPressed: _navigateBack,
+            );
+          },
+        ),
+      ),
     );
   }
 }

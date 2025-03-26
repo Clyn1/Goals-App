@@ -3,23 +3,29 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// App Theme constants for consistent styling across the application
 class AppTheme {
-  // Colors inspired by the travel/booking app UI design
-  static const Color primaryColor = Color(0xFFFF7366); // Salmon Red
-  static const Color secondaryColor = Color(0xFF3498DB); // Sky Blue
-  static const Color accentColor = Color(0xFF2C3E50); // Deep Blue
+  // Colors based on warm design
+  static const Color primaryColor = Color(0xFFFF7E5F);  // Sunset Orange
+  static const Color secondaryColor = Color(0xFFE95F5C); // Coral Red
+  static const Color accentColor = Color(0xFF2F80ED);    // Ocean Blue
   static const Color lightGray = Color(0xFFF5F5F5);
   static const Color textDark = Color(0xFF2D3142);
   static const Color textLight = Color(0xFF9C9EB9);
   
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [primaryColor, Color(0xFFFF9D92)],
+    colors: [primaryColor, Color(0xFFFF9D85)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
   
   static const LinearGradient secondaryGradient = LinearGradient(
-    colors: [secondaryColor, Color(0xFF45AAE7)],
+    colors: [secondaryColor, Color(0xFFEE7A78)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+  
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [accentColor, Color(0xFF56A3FF)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

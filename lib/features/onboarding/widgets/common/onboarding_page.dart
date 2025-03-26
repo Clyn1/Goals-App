@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chiclet/chiclet.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:goalsapp/features/onboarding/widgets/common/onboarding_progress.dart';
+import 'package:goalsapp/features/onboarding/widgets/common/fade_transition_content.dart';
 
 class OnboardingPage extends StatelessWidget {
   final String title;
@@ -14,6 +15,7 @@ class OnboardingPage extends StatelessWidget {
   final VoidCallback? onSkip;
   final int currentIndex;
   final int totalPages;
+  final VoidCallback? onBackPressed;
 
   const OnboardingPage({
     super.key,
@@ -27,20 +29,30 @@ class OnboardingPage extends StatelessWidget {
     this.onSkip,
     this.currentIndex = 0,
     this.totalPages = 3,
+    this.onBackPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            backgroundColor,
-            backgroundColor.withOpacity(0.8),
-          ],
-        ),
+        gradient: backgroundColor == const Color(0xFFF5E6CA)
+            ? const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFF5E6CA), // Cream
+                  Color(0xFFEDD9B4), // Darker cream
+                ],
+              )
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  backgroundColor,
+                  backgroundColor.withOpacity(0.8),
+                ],
+              ),
       ),
       child: SafeArea(
         child: Padding(
@@ -70,12 +82,13 @@ class OnboardingPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                 ),
               
-              // Expanded space for center content
+              // Main content area
               Expanded(
                 child: Center(
                   child: Card(
@@ -90,77 +103,71 @@ class OnboardingPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Icon with animation
-                          Container(
-                            height: 160,
-                            width: 160,
-                            decoration: BoxDecoration(
-                              color: backgroundColor.withOpacity(0.1),
-                              shape: BoxShape.circle,
+                          FadeTransitionContent(
+                            pageIndex: currentIndex,
+                            currentPageIndex: currentIndex,
+                            delay: const Duration(milliseconds: 100),
+                            slideOffset: const Offset(0, 30),
+                            child: Container(
+                              height: 160,
+                              width: 160,
+                              decoration: BoxDecoration(
+                                color: backgroundColor.withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                icon,
+                                size: 80,
+                                color: backgroundColor == const Color(0xFFF5E6CA) 
+                                    ? const Color(0xFF5B4B8A) // Dark purple for cream background
+                                    : backgroundColor,
+                              ),
                             ),
-                            child: Icon(
-                              icon,
-                              size: 80,
-                              color: backgroundColor,
-                            ),
-                          ).animate()
-                            .fadeIn(duration: 600.ms)
-                            .scale(delay: 300.ms, curve: Curves.elasticOut),
+                          ),
                           
                           const SizedBox(height: 30),
                           
                           // Title with animation
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF2D3142),
+                          FadeTransitionContent(
+                            pageIndex: currentIndex,
+                            currentPageIndex: currentIndex,
+                            delay: const Duration(milliseconds: 200),
+                            slideOffset: const Offset(0, 30),
+                            child: Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF2D3142),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ).animate()
-                            .fadeIn(delay: 300.ms)
-                            .moveY(begin: 20, end: 0, delay: 300.ms, duration: 600.ms),
+                          ),
                           
                           const SizedBox(height: 16),
                           
                           // Description with animation
-                          Text(
-                            description,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xFF9C9EB9),
-                              height: 1.5,
+                          FadeTransitionContent(
+                            pageIndex: currentIndex,
+                            currentPageIndex: currentIndex,
+                            delay: const Duration(milliseconds: 300),
+                            slideOffset: const Offset(0, 30),
+                            child: Text(
+                              description,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF9C9EB9),
+                                height: 1.5,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ).animate()
-                            .fadeIn(delay: 500.ms)
-                            .moveY(begin: 20, end: 0, delay: 500.ms, duration: 600.ms),
+                          ),
                         ],
                       ),
                     ),
                   ).animate()
                     .fadeIn(duration: 800.ms)
                     .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.0, 1.0), curve: Curves.easeOutQuint),
-                ),
-              ),
-              
-              // Button at the bottom
-              Align(
-                alignment: Alignment.center,
-                child: ChicletAnimatedButton(
-                  onPressed: onButtonPressed,
-                  backgroundColor: Colors.white,
-                  buttonColor: Colors.grey.shade300,
-                  foregroundColor: backgroundColor,
-                  height: 56,
-                  width: 200,
-                  child: Text(
-                    buttonText,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
               ),
               
@@ -172,9 +179,65 @@ class OnboardingPage extends StatelessWidget {
                   child: OnboardingProgress(
                     currentStep: currentIndex + 1,
                     totalSteps: totalPages,
-                    activeColor: Colors.white,
+                    activeColor: const Color(0xFFFFC107), // Gold/Amber dots
+                    inactiveColor: Colors.white,
                   ),
                 ),
+              
+              const SizedBox(height: 24),
+              
+              // Button at the bottom
+              FadeTransitionContent(
+                pageIndex: currentIndex,
+                currentPageIndex: currentIndex,
+                delay: const Duration(milliseconds: 400),
+                slideOffset: const Offset(0, 30),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Main continue/get started button (always centered)
+                    Center(
+                      child: ChicletAnimatedButton(
+                        onPressed: onButtonPressed,
+                        backgroundColor: Colors.white,
+                        buttonColor: Colors.grey.shade300,
+                        foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
+                            ? const Color(0xFF5B4B8A) // Dark purple for cream background
+                            : backgroundColor,
+                        height: 56,
+                        width: 200,
+                        child: Text(
+                          buttonText,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    
+                    // Back button - only show if not on first page and onBackPressed is provided
+                    if (currentIndex > 0 && onBackPressed != null)
+                      Positioned(
+                        left: 0,
+                        child: ChicletAnimatedButton(
+                          onPressed: onBackPressed,
+                          backgroundColor: Colors.white,
+                          buttonColor: Colors.grey.shade300,
+                          foregroundColor: backgroundColor == const Color(0xFFF5E6CA) 
+                              ? const Color(0xFF5B4B8A) 
+                              : backgroundColor,
+                          height: 56,
+                          width: 56,
+                          child: const Icon(
+                            Icons.arrow_back_rounded,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
