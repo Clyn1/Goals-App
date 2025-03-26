@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goalsapp/common/theme/app_theme.dart';
+import 'package:goalsapp/features/onboarding/widgets/theme/app_theme.dart';
 import 'package:goalsapp/features/onboarding/screens/onboarding_screen.dart';
 
 void main() {
