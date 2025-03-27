@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:goalsapp/features/onboarding/widgets/theme/app_theme.dart';
 import 'package:goalsapp/features/onboarding/screens/onboarding_screen.dart';
-import 'firebase_options.dart';
+import 'package:goalsapp/config/supabase_config.dart';
 
-void main() async {
+Future<void> main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
+    debug: true, // Set to false in production
   );
   
   runApp(const GoalsApp());
