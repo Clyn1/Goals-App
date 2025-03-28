@@ -1,0 +1,100 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# UI Design Rules for AI Implementation
+
+1. Color Harmony and Accessibility
+   - Use a consistent color palette with 2-3 primary colors and 2-3 accent colors
+   - Ensure sufficient color contrast (WCAG 2.1 standards)
+   - Include dark/light mode support
+   - Use color psychology principles for emotional impact
+   - Provide colorblind-friendly alternatives
+
+2. Typography Hierarchy 
+   - Limit to 2-3 font families maximum
+   - Maintain consistent font sizes and weights
+   - Use clear heading hierarchy (H1, H2, H3)
+   - Ensure readable line lengths (50-75 characters)
+   - Set appropriate line height (1.5-1.6 for body text)
+
+3. Layout and Spacing
+   - Follow a consistent grid system
+   - Use whitespace effectively
+   - Maintain balanced visual hierarchy
+   - Keep layouts responsive and adaptive
+   - Apply consistent padding and margins
+   - Use the 8pt grid system
+
+4. Interactive Elements
+   - Clear hover/active states
+   - Consistent button styles
+   - Obvious clickable elements
+   - Touch targets minimum 44x44px
+   - Loading states and feedback
+   - Smooth transitions (200-300ms)
+
+5. Visual Feedback
+   - Clear success/error states
+   - Progress indicators
+   - Micro-interactions
+   - Subtle animations (max 400ms)
+   - System status visibility
+   - Confirmation messages
+
+6. Navigation and Information Architecture
+   - Clear navigation hierarchy
+   - Breadcrumb trails where needed
+   - Search functionality
+   - Back buttons where appropriate
+   - Consistent menu placement
+   - Maximum 3 clicks to content
+
+7. Content Presentation
+   - Scannable content blocks
+   - Clear section headers
+   - Bulleted lists for multiple items
+   - Appropriate image sizing
+   - Loading optimization
+   - Placeholder states
+
+8. Form Design
+   - Clear input labels
+   - Visible validation rules
+   - Error prevention
+   - Required field indicators
+   - Logical tab order
+   - Auto-focus on first field
+
+9. Responsive Design
+   - Mobile-first approach
+   - Flexible layouts
+   - Breakpoint consistency
+   - Touch-friendly interfaces
+   - Content prioritization
+   - Performance optimization
+
+10. Accessibility Features
+    - ARIA labels
+    - Keyboard navigation
+    - Screen reader support
+    - Focus indicators
+    - Alt text for images
+    - Skip navigation links
+
+11. Brand Consistency
+    - Logo placement rules
+    - Brand color usage
+    - Typography guidelines
+    - Icon style consistency
+    - Voice and tone
+    - Visual language
+
+12. Performance Guidelines
+    - Image optimization
+    - Lazy loading
+    - Caching strategies
+    - Minimal HTTP requests
+    - Code optimization
+    - Resource prioritization
