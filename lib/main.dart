@@ -1,34 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:goalsapp/features/onboarding/widgets/theme/app_theme.dart';
-import 'package:goalsapp/features/onboarding/screens/onboarding_screen.dart';
-import 'package:goalsapp/config/supabase_config.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences.dart';
+import 'features/auth/providers/auth_state_provider.dart';
+import 'features/auth/services/local_storage_service.dart';
+import 'features/auth/screens/login_screen.dart';
+import 'onboardingflow/screens/welcome/onboarding_screen.dart';
 
-Future<void> main() async {
-  // Ensure Flutter binding is initialized
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final hasCompletedOnboarding = prefs.getBool('hasCompletedOnboarding') ?? false;
   
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: SupabaseConfig.url,
-    anonKey: SupabaseConfig.anonKey,
-    debug: true, // Set to false in production
-  );
-  
-  runApp(const GoalsApp());
+  runApp(MyApp(
+    hasCompletedOnboarding: hasCompletedOnboarding,
+    prefs: prefs,
+  ));
 }
 
-class GoalsApp extends StatelessWidget {
-  const GoalsApp({super.key});
+class MyApp extends StatelessWidget {
+  final bool hasCompletedOnboarding;
+  final SharedPreferences prefs;
+
+  const MyApp({
+    super.key,
+    required this.hasCompletedOnboarding,
+    required this.prefs,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Goalify',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.getTheme(context),
-      home: const OnboardingScreen(),
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (_) => LocalStorageService(prefs),
+        ),
+        ChangeNotifierProxyProvider<LocalStorageService, AuthStateProvider>(
+          create: (context) => AuthStateProvider(
+            Provider.of<LocalStorageService>(context, listen: false),
+          ),
+          update: (context, localStorage, previous) =>
+              previous ?? AuthStateProvider(localStorage),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'GoalsApp',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: hasCompletedOnboarding
+            ? const LoginScreen()
+            : const OnboardingScreen(),
+      ),
     );
   }
 }
-

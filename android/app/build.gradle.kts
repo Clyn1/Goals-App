@@ -6,8 +6,13 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     namespace = "apps.goals.goalsapp"
     compileSdk = 35
+=======
+    namespace = "com.example.goalsapp"
+    compileSdk = flutter.compileSdkVersion
+>>>>>>> origin/lex
     ndkVersion = "28.0.13004108"
 
     compileOptions {
@@ -21,7 +26,11 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+<<<<<<< HEAD
         applicationId = "apps.goals.goalsapp"
+=======
+        applicationId = "com.example.goalsapp"
+>>>>>>> origin/lex
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
