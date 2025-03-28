@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/pet_data.dart';
+import '../../models/onboarding_data.dart';
 import '../../components/bounce_button.dart';
 import '../../components/pet_stats_bottom_sheet.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -35,13 +36,13 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF2D3142),
-              Color(0xFF4F5D75),
+              Colors.white,
+              starterPets[_currentPage].color.withOpacity(0.1),
             ],
           ),
         ),
@@ -58,9 +59,9 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                     // Back button
                     BounceButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      backgroundColor: Colors.white.withOpacity(0.2),
-                      buttonColor: Colors.white.withOpacity(0.1),
-                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.grey.withOpacity(0.2),
+                      buttonColor: Colors.grey.withOpacity(0.1),
+                      foregroundColor: Colors.black87,
                       height: 40,
                       width: 40,
                       child: const Icon(Icons.arrow_back),
@@ -70,7 +71,7 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                     const Text(
                       'Choose Your Pet',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black87,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -84,10 +85,10 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                 const SizedBox(height: 20),
                 
                 // Page title and description
-                const Text(
+                Text(
                   'Your Companion Awaits',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black87,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
@@ -95,15 +96,15 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                 
                 const SizedBox(height: 12),
                 
-                const Text(
+                Text(
                   'Choose a pet that matches your goal style. Each pet has unique traits and will grow differently based on your goals.',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: Colors.black54,
                     fontSize: 16,
                   ),
                 ),
                 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 
                 // Pet carousel
                 Expanded(
@@ -131,7 +132,7 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                     count: starterPets.length,
                     effect: ExpandingDotsEffect(
                       activeDotColor: starterPets[_currentPage].color,
-                      dotColor: Colors.white.withOpacity(0.3),
+                      dotColor: Colors.grey.withOpacity(0.3),
                       dotHeight: 8,
                       dotWidth: 8,
                       expansionFactor: 3,
@@ -212,15 +213,15 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.psychology_outlined,
-                      color: Colors.white70,
+                      color: Colors.grey.shade600,
                       size: 18,
                     ),
-                    label: const Text(
+                    label: Text(
                       'Not sure? Take a personality quiz',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.grey.shade600,
                         fontSize: 14,
                       ),
                     ),
@@ -236,26 +237,35 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
 
   Widget _buildPetCard(PetData pet) {
     return Card(
-      elevation: 10,
+      elevation: 6,
+      shadowColor: pet.color.withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
       ),
-      child: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Pet icon
+            // Pet icon with animated container
             Container(
-              width: 120,
-              height: 120,
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: MediaQuery.of(context).size.width * 0.35,
               decoration: BoxDecoration(
                 color: pet.color.withOpacity(0.1),
                 shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: pet.color.withOpacity(0.2),
+                    blurRadius: 20,
+                    spreadRadius: 5,
+                  ),
+                ],
               ),
               child: Icon(
                 pet.icon,
-                size: 80,
+                size: MediaQuery.of(context).size.width * 0.2,
                 color: pet.color,
               ),
             ),
@@ -309,68 +319,9 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
                 );
               }).toList(),
             ),
-            
-            const SizedBox(height: 20),
-            
-            // Pet description
-            Text(
-              pet.description,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.black87,
-                height: 1.5,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            
-            const SizedBox(height: 20),
-            
-            // Pet evolution preview
-            const Text(
-              'Evolution Preview',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            
-            const SizedBox(height: 12),
-            
-            // Evolution stages (placeholder)
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(5, (index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 6),
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: pet.color.withOpacity(0.1 + (index * 0.15)),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: pet.color.withOpacity(0.5),
-                        width: 1,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: pet.color,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
-} 
+}

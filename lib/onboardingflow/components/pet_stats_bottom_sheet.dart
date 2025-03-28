@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/pet_data.dart';
 import '../models/pet_stats_data.dart';
-import '../models/onboarding_data.dart';
 import 'bounce_button.dart';
 
 class PetStatsBottomSheet extends StatefulWidget {
@@ -80,22 +79,13 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
         heightFactor: 0.85,
         child: Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.white,
-                _getPetThemeColor().withOpacity(0.05),
-              ],
-              stops: const [0.7, 1.0],
-            ),
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
             ),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10,
@@ -158,26 +148,13 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  _getPetThemeColor().withOpacity(0.7),
-                                  _getPetThemeColor().withOpacity(0.1),
-                                ],
-                                radius: 0.8,
-                              ),
+                              color: widget.pet.color.withOpacity(0.1),
                               shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: _getPetThemeColor().withOpacity(0.2),
-                                  blurRadius: 8,
-                                  spreadRadius: 1,
-                                ),
-                              ],
                             ),
                             child: Icon(
                               widget.pet.icon,
                               size: 40,
-                              color: Colors.white,
+                              color: widget.pet.color,
                             ),
                           ),
                           
@@ -193,7 +170,7 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: _getPetThemeColor(),
+                                    color: widget.pet.color,
                                   ),
                                 ),
                                 Text(
@@ -220,47 +197,42 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                             },
                             icon: Icon(
                               Icons.edit,
-                              color: _getPetThemeColor(),
+                              color: widget.pet.color,
                             ),
                           ),
                         ],
                       ),
                       
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
+                      
+                      // Simple scroll indicator
+                      Center(
+                        child: Icon(
+                          Icons.keyboard_double_arrow_down,
+                          size: 24,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 16),
                       
                       // About section
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              _getPetThemeColor().withOpacity(0.1),
-                              Colors.transparent,
-                            ],
-                            stops: const [0.0, 0.3],
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            color: Colors.black54,
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: _getPetThemeColor(),
-                              size: 20,
+                          SizedBox(width: 8),
+                          Text(
+                            'About This Buddy',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'About This Buddy',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _getPetThemeColor(),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       
                       const SizedBox(height: 16),
@@ -269,26 +241,12 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              _getPetThemeColor().withOpacity(0.1),
-                              _getPetThemeColor().withOpacity(0.05),
-                            ],
-                          ),
+                          color: widget.pet.color.withOpacity(0.05),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: _getPetThemeColor().withOpacity(0.2),
+                            color: widget.pet.color.withOpacity(0.2),
                             width: 1,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.03),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
                         ),
                         child: Text(
                           widget.pet.description,
@@ -303,58 +261,31 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                       const SizedBox(height: 24),
                       
                       // Personality traits section
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              _getPetThemeColor().withOpacity(0.1),
-                              Colors.transparent,
-                            ],
-                            stops: const [0.0, 0.3],
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.psychology,
+                            color: Colors.black54,
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.psychology,
-                              color: _getPetThemeColor(),
-                              size: 20,
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Personality Traits',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Personality Traits',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '${_selectedTraits.length}/4',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: widget.pet.color,
                             ),
-                            const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: _getPetThemeColor().withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: _getPetThemeColor().withOpacity(0.3),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Text(
-                                '${_selectedTraits.length}/4',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: _getPetThemeColor(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       
                       const SizedBox(height: 8),
@@ -380,27 +311,12 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                             selected: isSelected,
                             label: Text(trait),
                             onSelected: (_) => _toggleTrait(trait),
-                            selectedColor: isSelected 
-                                ? _getPetThemeColor().withOpacity(0.2) 
-                                : Colors.grey.shade100,
-                            backgroundColor: Colors.grey.shade50,
-                            checkmarkColor: _getPetThemeColor(),
-                            elevation: isSelected ? 2 : 0,
-                            shadowColor: _getPetThemeColor().withOpacity(0.3),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: BorderSide(
-                                color: isSelected 
-                                    ? _getPetThemeColor().withOpacity(0.5)
-                                    : Colors.grey.shade300,
-                                width: 1,
-                              ),
-                            ),
+                            selectedColor: widget.pet.color.withOpacity(0.2),
+                            checkmarkColor: widget.pet.color,
                             labelStyle: TextStyle(
-                              color: isSelected ? _getPetThemeColor() : Colors.black87,
+                              color: isSelected ? widget.pet.color : Colors.black87,
                               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           );
                         }).toList(),
                       ),
@@ -408,38 +324,22 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                       const SizedBox(height: 24),
                       
                       // Benefits section
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              _getPetThemeColor().withOpacity(0.1),
-                              Colors.transparent,
-                            ],
-                            stops: const [0.0, 0.3],
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.stars,
+                            color: Colors.black54,
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.stars,
-                              color: _getPetThemeColor(),
-                              size: 20,
+                          SizedBox(width: 8),
+                          Text(
+                            'Buddy Benefits',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Buddy Benefits',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _getPetThemeColor(),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       
                       const SizedBox(height: 16),
@@ -452,8 +352,7 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                             title: benefit.title,
                             description: benefit.description,
                             icon: benefit.icon,
-                            color: benefit.color,
-                            backgroundColor: benefit.backgroundColor,
+                            color: widget.pet.color,
                           ),
                         );
                       }).toList(),
@@ -477,13 +376,13 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
                         'Personality traits saved: ${_selectedTraits.join(", ")}',
                       ),
                       duration: const Duration(seconds: 2),
-                      backgroundColor: _getPetThemeColor(),
+                      backgroundColor: widget.pet.color,
                     ),
                   );
                 },
-                backgroundColor: Colors.white,
-                buttonColor: Colors.grey.shade300,
-                foregroundColor: _getPetThemeColor(),
+                backgroundColor: widget.pet.color,
+                buttonColor: widget.pet.color.withOpacity(0.8),
+                foregroundColor: Colors.white,
                 height: 56,
                 width: double.infinity,
                 child: const Text(
@@ -506,24 +405,16 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
     required String description,
     required IconData icon,
     required Color color,
-    required Color backgroundColor,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: Colors.grey.shade300,
           width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -533,25 +424,12 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      color,
-                      color.withOpacity(0.7),
-                    ],
-                    radius: 0.8,
-                  ),
+                  color: color.withOpacity(0.1),
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: color.withOpacity(0.2),
-                      blurRadius: 4,
-                      spreadRadius: 0,
-                    ),
-                  ],
                 ),
                 child: Icon(
                   icon,
-                  color: Colors.white,
+                  color: color,
                   size: 20,
                 ),
               ),
@@ -582,19 +460,5 @@ class _PetStatsBottomSheetState extends State<PetStatsBottomSheet> {
         ],
       ),
     );
-  }
-
-  // Helper method to get the appropriate theme color for this pet
-  Color _getPetThemeColor() {
-    switch (widget.pet.name) {
-      case 'Puppy':
-        return sunsetOrange;
-      case 'Kitten':
-        return coralRed;
-      case 'Fox Kit':
-        return creamColor;
-      default:
-        return widget.pet.color;
-    }
   }
 } 
