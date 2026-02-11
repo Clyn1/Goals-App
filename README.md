@@ -197,7 +197,7 @@ GoalsApp helps users track and complete their goals while taking care of a virtu
 
 Clone the repository and run the following commands:
 
-```bash
+``bash
 flutter pub get
 flutter run
 ```
