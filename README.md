@@ -4,7 +4,7 @@ A goal-tracking app with virtual pet companions that evolve as you achieve your 
 
 ## Project Overview
 
-GoalsApp helps users track and complete their goals while taking care of a virtual pet companion. The pet grows and evolves based on the user's goal completion rate, providing visual reinforcement for progress and achievement.
+GoalsApp helps users track and complete their goals while taking care of a virtual pet companion. The pet grows and evolves based on the user's goal completion rate, providing visual reinforcement for progress and achievement
 
 ## Project Progress
 
