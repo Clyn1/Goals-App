@@ -1,6 +1,6 @@
 # GoalsApp
 
-A goal-tracking app with virtual pet companions that evolve as you achieve your goals. This app combines productivity tools with pet care mechanics to create an engaging experience that motivates users to complete their goals.
+A goal-tracking app with virtual pet companions that evolve as you achieve your goals. This app combines productivity tools with pet care mechanics to create an engaging experience that motivates users to complete their goals
 
 ## Project Overview
 
